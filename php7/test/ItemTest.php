@@ -11,8 +11,8 @@ class ItemTest extends TestCase
         $item = new Item('product', 5, 6);
 
         $this->assertEquals('product', $item->name);
-        $this->assertEquals('5', $item->sell_in);
-        $this->assertEquals('6', $item->quality);
+        $this->assertEquals(5, $item->sell_in);
+        $this->assertEquals(6, $item->quality);
     }
 
     public function testItemReturnExpectedFormatWhenTreatedAsString(): void

@@ -2,64 +2,58 @@
 
 namespace App;
 
-final class GildedRose {
+final class GildedRose
+{
+    /** @var iterable */
+    private $items;
 
-    private $items = [];
-
-    public function __construct($items) {
+    public function __construct(iterable $items)
+    {
         $this->items = $items;
     }
 
-    public function updateQuality() {
+    public function updateQuality(): void
+    {
         foreach ($this->items as $item) {
-            if ($item->name != 'Aged Brie' and $item->name != 'Backstage passes to a TAFKAL80ETC concert') {
+            if ($item->name !== 'Aged Brie' && $item->name !== 'Backstage passes to a TAFKAL80ETC concert') {
                 if ($item->quality > 0) {
-                    if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                        $item->quality = $item->quality - 1;
+                    if ($item->name !== 'Sulfuras, Hand of Ragnaros') {
+                        --$item->quality;
                     } else {
                         $item->quality = 80;
                     }
                 }
-            } else {
-                if ($item->quality < 50) {
-                    $item->quality = $item->quality + 1;
-                    if ($item->name == 'Backstage passes to a TAFKAL80ETC concert') {
+            } elseif ($item->quality < 50) {
+                ++$item->quality;
+                if ($item->name === 'Backstage passes to a TAFKAL80ETC concert') {
+                    if ($item->quality < 50) {
                         if ($item->sell_in < 11) {
-                            if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
-                            }
+                            ++$item->quality;
                         }
                         if ($item->sell_in < 6) {
-                            if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
-                            }
+                            ++$item->quality;
                         }
                     }
                 }
             }
-            
-            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                $item->sell_in = $item->sell_in - 1;
+
+            if ($item->name !== 'Sulfuras, Hand of Ragnaros') {
+                --$item->sell_in;
             }
-            
+
             if ($item->sell_in < 0) {
-                if ($item->name != 'Aged Brie') {
-                    if ($item->name != 'Backstage passes to a TAFKAL80ETC concert') {
-                        if ($item->quality > 0) {
-                            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                                $item->quality = $item->quality - 1;
-                            }
+                if ($item->name !== 'Aged Brie') {
+                    if ($item->name !== 'Backstage passes to a TAFKAL80ETC concert') {
+                        if (($item->quality > 0) && $item->name !== 'Sulfuras, Hand of Ragnaros') {
+                            --$item->quality;
                         }
                     } else {
-                        $item->quality = $item->quality - $item->quality;
+                        $item->quality -= $item->quality;
                     }
-                } else {
-                    if ($item->quality < 50) {
-                        $item->quality = $item->quality + 1;
-                    }
+                } elseif ($item->quality < 50) {
+                    ++$item->quality;
                 }
             }
         }
     }
 }
-
