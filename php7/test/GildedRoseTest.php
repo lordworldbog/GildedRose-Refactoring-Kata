@@ -2,10 +2,28 @@
 
 namespace App;
 
+use App\Entities\AgedBrie;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
 class GildedRoseTest extends TestCase
 {
+    public function testGildedRoseConstructorAcceptsOnlyItems():void
+    {
+        $this->expectException(TypeError::class);
+        $items = [new AgedBrie(new Item('AgedBrie', 0, 0))];
+        new GildedRose($items);
+    }
+
+
+
+
+
+
+
+
+
+
     public function testOrdinaryProductSellInCanBeBelowZeroAndQualityCant(): void
     {
         $items = [new Item('Ordinary product', 0, 0)];
