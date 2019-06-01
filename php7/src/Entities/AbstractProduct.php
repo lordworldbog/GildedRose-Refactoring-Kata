@@ -28,4 +28,10 @@ abstract class AbstractProduct implements ProductInterface
     {
         return isset($this->item->$name);
     }
+
+    public function updateAttributes(): void
+    {
+        $this->updateQuality();
+        $this->updateSellIn();
+    }
 }

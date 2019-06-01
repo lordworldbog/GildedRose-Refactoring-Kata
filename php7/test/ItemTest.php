@@ -1,7 +1,8 @@
 <?php
 
-namespace App;
+namespace Test;
 
+use App\Item;
 use PHPUnit\Framework\TestCase;
 
 class ItemTest extends TestCase

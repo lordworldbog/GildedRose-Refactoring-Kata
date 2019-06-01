@@ -2,15 +2,26 @@
 
 namespace App\Entities;
 
+use App\Item;
+
 class Sulfuras extends AbstractProduct
 {
+    public function __construct(Item $item)
+    {
+        parent::__construct($item);
+
+        if ($item->quality !== 80) {
+            $this->item->quality = 80;
+        }
+    }
+
     public function updateSellIn(): void
     {
-        // TODO: Implement updateSellIn() method.
+        // never has to be sold
     }
 
     public function updateQuality(): void
     {
-        // TODO: Implement updateQuality() method.
+        // never has to be decreases in Quality
     }
 }

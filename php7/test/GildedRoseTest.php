@@ -1,8 +1,10 @@
 <?php
 
-namespace App;
+namespace Test;
 
 use App\Entities\AgedBrie;
+use App\GildedRose;
+use App\Item;
 use PHPUnit\Framework\TestCase;
 use TypeError;
 
@@ -14,15 +16,6 @@ class GildedRoseTest extends TestCase
         $items = [new AgedBrie(new Item('AgedBrie', 0, 0))];
         new GildedRose($items);
     }
-
-
-
-
-
-
-
-
-
 
     public function testOrdinaryProductSellInCanBeBelowZeroAndQualityCant(): void
     {
@@ -60,7 +53,7 @@ class GildedRoseTest extends TestCase
         $this->assertEquals(2, $items[0]->quality);
     }
 
-    public function testAgedBrieQualityGrowsWhenSellInBelowZero(): void
+    public function testAgedBrieQualityGrowsDoublyWhenSellInFallsBelowZero(): void
     {
         $items = [new Item('Aged Brie', -1, 2)];
         $gildedRose = new GildedRose($items);
@@ -87,7 +80,7 @@ class GildedRoseTest extends TestCase
         $this->assertEquals(80, $items[0]->quality);
     }
 
-    public function testBackstagePassesQualityGrowWhenSellInFall()
+    public function testBackstagePassesQualityGrowWhenSellInFall(): void
     {
         $items = [new Item('Backstage passes to a TAFKAL80ETC concert', 20, 5)];
         $gildedRose = new GildedRose($items);
@@ -96,29 +89,29 @@ class GildedRoseTest extends TestCase
         $this->assertEquals(6, $items[0]->quality);
     }
 
-    public function testBackstagePassesQualityGrowByTwoWhenSellInFallBetweenFourAndTen()
+    public function testBackstagePassesQualityGrowByTwoWhenSellInFallBetweenSixAndTen(): void
     {
-        for ($i = 10; $i > 5; $i--) {
-            $items = [new Item('Backstage passes to a TAFKAL80ETC concert', $i, 5)];
-            $gildedRose = new GildedRose($items);
+        $items = [new Item('Backstage passes to a TAFKAL80ETC concert', 10, 1)];
+        $gildedRose = new GildedRose($items);
+        for ($i = 10, $j = 1; $i >= 6; $i--, $j+=2) {
             $gildedRose->updateQuality();
             $this->assertEquals($i-1, $items[0]->sell_in);
-            $this->assertEquals(7, $items[0]->quality);
+            $this->assertEquals($j+2, $items[0]->quality);
         }
     }
 
-    public function testBackstagePassesQualityGrowByThreeWhenSellInFallBetweenFiveAndThree()
+    public function testBackstagePassesQualityGrowByThreeWhenSellInFallBetweenFiveAndOne(): void
     {
-        for ($i = 5; $i > 0; $i--) {
-            $items = [new Item('Backstage passes to a TAFKAL80ETC concert', $i, 5)];
-            $gildedRose = new GildedRose($items);
+        $items = [new Item('Backstage passes to a TAFKAL80ETC concert', 5, 1)];
+        $gildedRose = new GildedRose($items);
+        for ($i = 5, $j = 1; $i > 0; $i--, $j+=3) {
             $gildedRose->updateQuality();
             $this->assertEquals($i-1, $items[0]->sell_in);
-            $this->assertEquals(8, $items[0]->quality);
+            $this->assertEquals($j+3, $items[0]->quality);
         }
     }
 
-    public function testBackstagePassesQualityFallToZeroAfterConcert()
+    public function testBackstagePassesQualityFallToZeroAfterConcert(): void
     {
         for ($i = 0; $i > -1; $i--) {
             $items = [new Item('Backstage passes to a TAFKAL80ETC concert', $i, 5)];
